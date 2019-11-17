@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<icon></icon>
+	<env>cui</env>
+	<snap>5</snap>
+	<zoom>1</zoom>
+	<related_files>
+		<path>C:/Users/pinfo/Documents/repositories/kuin-type-bridge/x64/Release/kuin_type_bridge.dll</path>
+	</related_files>
+	<resources />
+</configuration>
