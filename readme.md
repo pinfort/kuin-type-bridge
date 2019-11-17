@@ -1,7 +1,7 @@
 # Kuin type bridge
 Kuinの型とC++の型を相互変換するための関数群です。
 
-# C<char*> to Kuin<[]char>
+# Cpp<char*> to Kuin<[]char>
 - 関数名
   - CStrToKuinStr
 - 注意事項
