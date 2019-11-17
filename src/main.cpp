@@ -7,9 +7,8 @@ BOOL WINAPI DllMain(HINSTANCE, DWORD, LPVOID)
   return TRUE;
 }
 
-unsigned char* CStrToKuinStr(std::string origin_str)
+unsigned char* CStrToKuinStr(char* native_str)
 {
-	const char* native_str = origin_str.c_str();
 	for (size_t i = 0; i < strlen(native_str); i++)
 	{
 		printf("%x ", native_str[i]);
@@ -48,10 +47,15 @@ unsigned char* CStrToKuinStr(std::string origin_str)
 	return result_str;
 }
 
+unsigned char* CppStrToKuinStr(std::string native_str)
+{
+	return CStrToKuinStr(const_cast<char*>(native_str.c_str()));
+}
+
 extern "C" _declspec(dllexport) unsigned char* toKuinStr()
 {
 	std::string native_str = "this is test string";
-	unsigned char* result_str = CStrToKuinStr(native_str);
+	unsigned char* result_str = CppStrToKuinStr(native_str);
 
 	return result_str;
 }
