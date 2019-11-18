@@ -1,6 +1,7 @@
 #include <string>
 #include <cstdlib>
 #include "common.h"
+#include "convert.h"
  
 BOOL WINAPI DllMain(HINSTANCE, DWORD, LPVOID)
 {
@@ -9,54 +10,50 @@ BOOL WINAPI DllMain(HINSTANCE, DWORD, LPVOID)
 
 unsigned char* CStrToKuinStr(char* native_str)
 {
-	// TODO: printÉfÉoÉbÉOÇè¡Çπ
-	for (size_t i = 0; i < strlen(native_str); i++)
-	{
-		printf("%x ", native_str[i]);
-	}
-	printf("\n");
-
-	// è⁄ç◊ïsñæÅBÇ∆ÇËÇ†Ç¶Ç∏0
+	// Ë©≥Á¥∞‰∏çÊòé„ÄÇ„Å®„Çä„ÅÇ„Åà„Åö0
 	unsigned long long default_ref_cnt_func = 0;
 
-	// UTF-8 UTF-16ïœä∑ÇÃÇΩÇﬂÇÃàÍéûï∂éöóÒÅAÉÅÉÇÉäämï€
+	// UTF-8 UTF-16Â§âÊèõ„ÅÆ„Åü„ÇÅ„ÅÆ‰∏ÄÊôÇÊñáÂ≠óÂàó„ÄÅ„É°„É¢„É™Á¢∫‰øù
 	unsigned char* tmp_str = (unsigned char*)malloc(sizeof(unsigned char) * strlen(native_str) * 2);
 	memset(tmp_str, 0, sizeof(unsigned char) * strlen(native_str) * 2);
 
-	// UTF-8 UTF-16ïœä∑ÇÃÇΩÇﬂÇ…å≥ÇÃï∂éöóÒàÍÉoÉCÉgÇ≤Ç∆Ç…å„ÇÎÇ…0x00Çë}ì¸
-	// TODO: Ç‹Ç∆Ç‡Ç»UTF-8 UTF-16ïœä∑ÇégÇ§
+	// UTF-8 UTF-16Â§âÊèõ„ÅÆ„Åü„ÇÅ„Å´ÂÖÉ„ÅÆÊñáÂ≠óÂàó‰∏Ä„Éê„Ç§„Éà„Åî„Å®„Å´Âæå„Çç„Å´0x00„ÇíÊåøÂÖ•
+	// TODO: „Åæ„Å®„ÇÇ„Å™UTF-8 UTF-16Â§âÊèõ„Çí‰Ωø„ÅÜ
+	/*
 	size_t tmp_str_cnt = 0;
 	for (size_t i = 0; i < strlen(native_str); i++)
 	{
 		tmp_str[tmp_str_cnt] = native_str[i];
 		tmp_str[tmp_str_cnt + 1] = 0x00;
 		tmp_str_cnt += 2;
-	}
+	}*/
+	wprintf(L"%ls\n", Utf8CStrToUtf16WStr(native_str));
+	tmp_str = (unsigned char*)WStrToCStr(Utf8CStrToUtf16WStr(native_str));
 
-	// UTF-16ïœä∑å„ÇÃï∂éöóÒïîï™ÇÃí∑Ç≥
+	// UTF-16Â§âÊèõÂæå„ÅÆÊñáÂ≠óÂàóÈÉ®ÂàÜ„ÅÆÈï∑„Åï
 	unsigned long long len = strlen(native_str) * 2;
 
-	// UTF-16ïœä∑å„ÇÃÉÅÉ^ÉfÅ[É^ä‹ÇﬁëSëÃÇÃí∑Ç≥
+	// UTF-16Â§âÊèõÂæå„ÅÆ„É°„Çø„Éá„Éº„ÇøÂê´„ÇÄÂÖ®‰Ωì„ÅÆÈï∑„Åï
 	size_t result_str_len = 0x10 + sizeof(unsigned char) * (size_t)len;
 
-	// ï‘Ç∑ÉoÉCÉgóÒÇÃÉÅÉÇÉäämï€
+	// Ëøî„Åô„Éê„Ç§„ÉàÂàó„ÅÆ„É°„É¢„É™Á¢∫‰øù
 	unsigned char* result_str = (unsigned char*)(malloc(result_str_len));
 	memset(result_str, 0, result_str_len);
 
-	// ÉÅÉ^ÉfÅ[É^ÇÃèëÇ´çûÇ›
+	// „É°„Çø„Éá„Éº„Çø„ÅÆÊõ∏„ÅçËæº„Åø
 	((unsigned long long*)result_str)[0] = default_ref_cnt_func; // 0x00-0x07
 	((unsigned long long*)result_str)[1] = strlen(native_str); // 0x08-0x0f
 
-	// UTF-16ïœä∑Ç≥ÇÍÇΩï∂éöóÒÇï‘Ç∑ÉoÉCÉgóÒÇ…èëÇ´çûÇ›ÅBàÍéûï∂éöóÒÇÕÉÅÉÇÉääJï˙
+	// UTF-16Â§âÊèõ„Åï„Çå„ÅüÊñáÂ≠óÂàó„ÇíËøî„Åô„Éê„Ç§„ÉàÂàó„Å´Êõ∏„ÅçËæº„Åø„ÄÇ‰∏ÄÊôÇÊñáÂ≠óÂàó„ÅØ„É°„É¢„É™ÈñãÊîæ
 	memcpy(result_str + 0x10, tmp_str, sizeof(unsigned char) * (size_t)len);
 	free(tmp_str);
 
-	// TODO: printÉfÉoÉbÉOÇè¡Çπ
-	for (size_t i = 0; i < len; i++)
+	// TODO: print„Éá„Éê„ÉÉ„Ç∞„ÇíÊ∂à„Åõ
+	/*for (size_t i = 0; i < len; i++)
 	{
 		printf("%x ", (result_str + 0x10)[i]);
 	}
-	printf("\n");
+	printf("\n");*/
 
 	return result_str;
 }
@@ -68,7 +65,7 @@ unsigned char* CppStrToKuinStr(std::string native_str)
 
 extern "C" _declspec(dllexport) unsigned char* toKuinStr()
 {
-	std::string native_str = "this is test string";
+	std::string native_str = "Êó•Êú¨Ë™û„ÅÆÊº¢Â≠ó„ÇÇË°®Á§∫„Åß„Åç„Åæ„Åô„ÅãÔºü";
 	unsigned char* result_str = CppStrToKuinStr(native_str);
 
 	return result_str;
