@@ -13,7 +13,7 @@ Kuinの型とC++の型を相互変換するための関数群です。
   - 入力の型がstd::stringからstd::wstringに変更になっています。
   - 入力の型の変更に伴い関数名が変更されています。
 
-## Kuin<[]char> to Cpp\<std::string>
+## Kuin<[]char> to Cpp\<std::wstring>
 - 定義
   - std::wstring KuinStrToWStr(const unsigned char* kuin_str);
 - 関数名
