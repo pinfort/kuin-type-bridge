@@ -7,5 +7,5 @@ func main()
 		do cui@print((s[kstr] $ bit16).toStr() ~ " ")
 	end for
 	do cui@print("\n")
-	do cui@print(s ~ "\n")
+	;do cui@print(s ~ "\n")
 end func

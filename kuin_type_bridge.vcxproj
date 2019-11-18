@@ -105,18 +105,26 @@
       <EntryPointSymbol>DllMain</EntryPointSymbol>
       <SubSystem>Windows</SubSystem>
     </Link>
+    <ClCompile>
+      <AdditionalOptions>/source-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Link>
       <EntryPointSymbol>DllMain</EntryPointSymbol>
       <SubSystem>Windows</SubSystem>
     </Link>
+    <ClCompile>
+      <AdditionalOptions>/source-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\convert.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\common.h" />
+    <ClInclude Include="src\convert.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
