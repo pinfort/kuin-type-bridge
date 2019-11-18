@@ -1,11 +1,7 @@
-func[kuin_type_bridge.dll, toKuinStr]toKuinStr(): []char
+func[kuin_type_bridge.dll, toKuinStr]toKuinStr(input: []char): []char
 end func
 
 func main()
-	var s: []char :: @toKuinStr()
-	for kstr(0, ^s - 1)
-		do cui@print((s[kstr] $ bit16).toStr() ~ " ")
-	end for
-	do cui@print("\n")
-	;do cui@print(s ~ "\n")
+	var s: []char :: @toKuinStr("日本語だよ")
+	do cui@print(s ~ "\n")
 end func
