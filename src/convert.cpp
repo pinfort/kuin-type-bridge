@@ -13,26 +13,26 @@ std::wstring KuinStrToWStr(const unsigned char* kuin_str)
 	return (wchar_t*)result_str;
 }
 
-unsigned char* WStrToKuinStr(std::wstring wstr)
+unsigned char* WStrToKuinStr(const std::wstring wstr)
 {
-	// Ú×•s–¾B‚Æ‚è‚ ‚¦‚¸0
+	// è©³ç´°ä¸æ˜ã€‚ã¨ã‚Šã‚ãˆãš0
 	unsigned long long default_ref_cnt_func = 0;
 
-	// •¶š—ñ•”•ª‚Ì’·‚³
+	// æ–‡å­—åˆ—éƒ¨åˆ†ã®é•·ã•
 	unsigned long long len = sizeof(wchar_t) * wstr.length();
 
-	// ƒƒ^ƒf[ƒ^ŠÜ‚Ş‘S‘Ì‚Ì’·‚³
+	// ãƒ¡ã‚¿ãƒ‡ãƒ¼ã‚¿å«ã‚€å…¨ä½“ã®é•·ã•
 	size_t result_str_len = 0x10 + (size_t)len;
 
-	// •Ô‚·ƒoƒCƒg—ñ‚Ìƒƒ‚ƒŠŠm•Û
+	// è¿”ã™ãƒã‚¤ãƒˆåˆ—ã®ãƒ¡ãƒ¢ãƒªç¢ºä¿
 	unsigned char* result_str = (unsigned char*)(malloc(result_str_len));
 	memset(result_str, 0, result_str_len);
 
-	// ƒƒ^ƒf[ƒ^‚Ì‘‚«‚İ
+	// ãƒ¡ã‚¿ãƒ‡ãƒ¼ã‚¿ã®æ›¸ãè¾¼ã¿
 	((unsigned long long*)result_str)[0] = default_ref_cnt_func; // 0x00-0x07
 	((unsigned long long*)result_str)[1] = wstr.length(); // 0x08-0x0f
 
-	// •¶š—ñ‚ğ•Ô‚·ƒoƒCƒg—ñ‚É‘‚«‚İB
+	// æ–‡å­—åˆ—ã‚’è¿”ã™ãƒã‚¤ãƒˆåˆ—ã«æ›¸ãè¾¼ã¿ã€‚
 	memcpy(result_str + 0x10, wstr.c_str(), (size_t)len);
 
 	return result_str;
