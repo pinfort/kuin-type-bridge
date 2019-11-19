@@ -1,7 +1,0 @@
-func[kuin_type_bridge.dll, toKuinStr]toKuinStr(input: []char): []char
-end func
-
-func main()
-	var s: []char :: @toKuinStr("日本語だよ")
-	do cui@print(s ~ "\n")
-end func
