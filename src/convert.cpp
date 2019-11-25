@@ -123,3 +123,24 @@ std::vector<double> KuinArrayToCppVector(const double* kuin_arr)
 
 	return result_arr;
 }
+
+std::vector<std::wstring> KuinArrayToCppVector(const unsigned char** kuin_arr)
+{
+	KuinArray kuin_arr_obj = KuinArray((void*)kuin_arr);
+
+	unsigned long long arr_len = kuin_arr_obj.getLen();
+
+	std::vector<std::wstring> result_arr(arr_len);
+
+	void** body_str_ptr = (void**)kuin_arr_obj.getBody();
+
+	for (size_t i = 0; i < arr_len; i++)
+	{
+		std::wstring str = KuinStrToWStr((unsigned char*)*body_str_ptr);
+		result_arr[i] = str;
+
+		body_str_ptr++;
+	}
+
+	return result_arr;
+}
