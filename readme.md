@@ -11,10 +11,6 @@ Kuinの型とC++の型を相互変換するための関数群です。
 
 ## Functions
 
-### ~~Cpp<char*> to Kuin<[]char>~~
-
-削除されました。
-
 ### Cpp\<std::wstring> to Kuin<[]char>
 
 - 定義
@@ -33,6 +29,29 @@ Kuinの型とC++の型を相互変換するための関数群です。
   - KuinStrToWStr
 - 注意事項
   - 出力の型はstd::wstringです。
+
+### Kuin<[]int> to Cpp\<std::vector\<signed long long>>
+
+- 定義
+  - std::vector\<signed long long> KuinArrayToCppVector(const signed long long* kuin_arr);
+- 関数名
+  - KuinArrayToCppVector
+
+### Kuin<[]Char> to Cpp\<std::vector\<char>>
+
+- 定義
+  - std::vector\<unsigned char> KuinArrayToCppVector(const unsigned char* kuin_arr);
+- 関数名
+  - KuinArrayToCppVector
+- 注意事項
+  - 文字列をより簡単に扱うにはKuinStrToWStrを利用してください。
+
+### Kuin<[]float> to Cpp\<std::vector\<double>>
+
+- 定義
+  - std::vector\<double> KuinArrayToCppVector(const double* kuin_arr);
+- 関数名
+  - KuinArrayToCppVector
 
 ## LICENSE
 
