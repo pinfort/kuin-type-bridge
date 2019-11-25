@@ -56,7 +56,7 @@ Kuinの型とC++の型を相互変換するための関数群です。
 ### Kuin<[][]char> to Cpp\<std::vector\<std::wstring>>
 
 - 定義
-  - std::vector<std::wstring> KuinArrayToCppVector(const unsigned char** kuin_arr)
+  - std::vector\<std::wstring> KuinArrayToCppVector(const unsigned char** kuin_arr)
 - 関数名
   - KuinArrayToCppVector
 - 注意事項
