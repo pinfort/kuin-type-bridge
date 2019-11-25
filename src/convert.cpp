@@ -1,6 +1,38 @@
 #include "common.h"
 #include "convert.h"
 
+class KuinArray
+{
+public:
+	KuinArray(void* kuin_arr)
+	{
+		default_ref_cnt_func = ((unsigned long long*)kuin_arr)[0];
+		len = ((unsigned long long*)kuin_arr)[1];
+
+		body = (unsigned char*)kuin_arr + 0x10;
+	}
+
+	unsigned long long getLen()
+	{
+		return len;
+	}
+
+	unsigned long long getDefaultRefCntFunc()
+	{
+		return default_ref_cnt_func;
+	}
+
+	void* getBody()
+	{
+		return body;
+	}
+
+private:
+	unsigned long long default_ref_cnt_func;
+	unsigned long long len;
+	void* body;
+};
+
 std::wstring KuinStrToWStr(const unsigned char* kuin_str)
 {
 	unsigned long long char_len = ((unsigned long long*)kuin_str)[1];
@@ -36,4 +68,58 @@ unsigned char* WStrToKuinStr(const std::wstring wstr)
 	memcpy(result_str + 0x10, wstr.c_str(), (size_t)len);
 
 	return result_str;
+}
+
+std::vector<signed long long> KuinArrayToCppVector(const signed long long* kuin_arr)
+{
+	KuinArray kuin_arr_obj = KuinArray((void*)kuin_arr);
+
+	unsigned long long arr_len = kuin_arr_obj.getLen();
+
+	std::vector<signed long long> result_arr(arr_len);
+
+	signed long long* body_arr = (signed long long*)kuin_arr_obj.getBody();
+
+	for (size_t i = 0; i < arr_len; i++)
+	{
+		result_arr[i] = body_arr[i];
+	}
+
+	return result_arr;
+}
+
+std::vector<unsigned char> KuinArrayToCppVector(const unsigned char* kuin_arr)
+{
+	KuinArray kuin_arr_obj = KuinArray((void*)kuin_arr);
+
+	unsigned long long arr_len = kuin_arr_obj.getLen();
+
+	std::vector<unsigned char> result_arr(arr_len);
+
+	unsigned char* body_arr = (unsigned char*)kuin_arr_obj.getBody();
+
+	for (size_t i = 0; i < arr_len; i++)
+	{
+		result_arr[i] = body_arr[i];
+	}
+
+	return result_arr;
+}
+
+std::vector<double> KuinArrayToCppVector(const double* kuin_arr)
+{
+	KuinArray kuin_arr_obj = KuinArray((void*)kuin_arr);
+
+	unsigned long long arr_len = kuin_arr_obj.getLen();
+
+	std::vector<double> result_arr(arr_len);
+
+	double* body_arr = (double*)kuin_arr_obj.getBody();
+
+	for (size_t i = 0; i < arr_len; i++)
+	{
+		result_arr[i] = body_arr[i];
+	}
+
+	return result_arr;
 }
