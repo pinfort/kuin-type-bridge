@@ -1,5 +1,5 @@
 #include "common.h"
-#include "convert.h"
+#include "kuin_type_bridge.h"
 
 class KuinArray
 {
@@ -54,7 +54,7 @@ unsigned char* WStrToKuinStr(const std::wstring wstr)
 	unsigned long long len = sizeof(wchar_t) * wstr.length();
 
 	// メタデータ含む全体の長さ
-	size_t result_str_len = 0x10 + (size_t)len;
+	size_t result_str_len = 0x10 + (size_t)len + 1;
 
 	// 返すバイト列のメモリ確保
 	unsigned char* result_str = (unsigned char*)(malloc(result_str_len));
@@ -63,9 +63,13 @@ unsigned char* WStrToKuinStr(const std::wstring wstr)
 	// メタデータの書き込み
 	((unsigned long long*)result_str)[0] = default_ref_cnt_func; // 0x00-0x07
 	((unsigned long long*)result_str)[1] = wstr.length(); // 0x08-0x0f
+	printf("%d\n", wstr.length());
 
 	// 文字列を返すバイト列に書き込み。
 	memcpy(result_str + 0x10, wstr.c_str(), (size_t)len);
+
+	// Null終端させる
+	((unsigned char*)(result_str + 0x10 + len + 1))[0] = '\0';
 
 	return result_str;
 }

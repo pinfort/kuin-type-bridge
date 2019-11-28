@@ -119,11 +119,11 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\convert.cpp" />
+    <ClCompile Include="src\kuin_type_bridge.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\common.h" />
-    <ClInclude Include="src\convert.h" />
+    <ClInclude Include="src\kuin_type_bridge.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
