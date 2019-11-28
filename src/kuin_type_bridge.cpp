@@ -63,7 +63,6 @@ unsigned char* WStrToKuinStr(const std::wstring wstr)
 	// メタデータの書き込み
 	((unsigned long long*)result_str)[0] = default_ref_cnt_func; // 0x00-0x07
 	((unsigned long long*)result_str)[1] = wstr.length(); // 0x08-0x0f
-	printf("%d\n", wstr.length());
 
 	// 文字列を返すバイト列に書き込み。
 	memcpy(result_str + 0x10, wstr.c_str(), (size_t)len);
