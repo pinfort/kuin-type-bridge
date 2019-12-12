@@ -12,6 +12,13 @@ public:
 		body = (unsigned char*)kuin_arr + 0x10;
 	}
 
+	KuinArray(unsigned long long len, unsigned long long default_ref_cnt_func, void* body)
+	{
+		KuinArray::len = len;
+		KuinArray::default_ref_cnt_func = default_ref_cnt_func;
+		KuinArray::body = body;
+	}
+
 	unsigned long long getLen()
 	{
 		return len;
@@ -25,6 +32,24 @@ public:
 	void* getBody()
 	{
 		return body;
+	}
+
+	void* getRaw()
+	{
+		// メタデータ含む全体の長さ
+		size_t result_len = 0x10 + (size_t)len;
+
+		// 返すバイト列のメモリ確保
+		unsigned char* result = (unsigned char*)(malloc(result_len));
+		memset(result, 0, result_len);
+
+		// メタデータの書き込み
+		((unsigned long long*)result)[0] = default_ref_cnt_func; // 0x00-0x07
+		((unsigned long long*)result)[1] = len; // 0x08-0x0f
+
+		memcpy(result + 0x10, body, (size_t)len);
+
+		return result;
 	}
 
 private:
