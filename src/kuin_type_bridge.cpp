@@ -187,6 +187,7 @@ unsigned char* CppVectorToKuinArray(const std::vector<unsigned char> cpp_vector)
 	{
 		ptr[i] = cpp_vector[i];
 	}
+	// TODO: そもそもnull終端されていた場合？
 	ptr[cpp_vector.size()] = '\0';
 	KuinArray result_arr(len, default_ref_cnt_func, ptr);
 	return result_arr.getRaw();
