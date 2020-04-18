@@ -175,7 +175,7 @@ std::vector<std::wstring> KuinArrayToCppVector(const unsigned char** kuin_arr)
 
 unsigned char* CppVectorToKuinArray(const std::vector<unsigned char> cpp_vector)
 {
-	unsigned long long len = cpp_vector.size() + 1;
+	unsigned long long len = cpp_vector.size();
 
 	// 詳細不明。とりあえず0
 	unsigned long long default_ref_cnt_func = 0;
