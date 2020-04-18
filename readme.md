@@ -37,7 +37,7 @@ Kuinの型とC++の型を相互変換するための関数群です。
 - 関数名
   - KuinArrayToCppVector
 
-### Kuin<[]char> to Cpp\<std::vector\<char>>
+### Kuin<[]char> to Cpp\<std::vector\<unsigned char>>
 
 - 定義
   - std::vector\<unsigned char> KuinArrayToCppVector(const unsigned char* kuin_arr);
@@ -61,6 +61,15 @@ Kuinの型とC++の型を相互変換するための関数群です。
   - KuinArrayToCppVector
 - 注意事項
   - 見ればわかりますが、文字列の配列用の関数です
+
+### Cpp\<std::vector\<unsigned char>> to Kuin\<[]char>
+
+- 定義
+  - unsigned char* CppVectorToKuinArray(const std::vector\<unsigned char> cpp_vector)
+- 関数名
+  - CppVectorToKuinArray
+- 注意事項
+  - Kuinのbit8向けにも同じ関数が使えます。
 
 ## LICENSE
 

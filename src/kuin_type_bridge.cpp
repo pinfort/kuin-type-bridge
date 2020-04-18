@@ -34,7 +34,7 @@ public:
 		return body;
 	}
 
-	void* getRaw()
+	unsigned char* getRaw()
 	{
 		// メタデータ含む全体の長さ
 		size_t result_len = 0x10 + (size_t)len;
@@ -171,4 +171,23 @@ std::vector<std::wstring> KuinArrayToCppVector(const unsigned char** kuin_arr)
 	}
 
 	return result_arr;
+}
+
+unsigned char* CppVectorToKuinArray(const std::vector<unsigned char> cpp_vector)
+{
+	unsigned long long len = cpp_vector.size() + 1;
+
+	// 詳細不明。とりあえず0
+	unsigned long long default_ref_cnt_func = 0;
+
+	// 返すバイト列のメモリ確保
+	unsigned char* ptr = (unsigned char*)(malloc(sizeof(unsigned char) * (cpp_vector.size() + 1)));
+
+	for (size_t i = 0; i < (cpp_vector.size() - 1); i++)
+	{
+		ptr[i] = cpp_vector[i];
+	}
+	ptr[cpp_vector.size()] = '\0';
+	KuinArray result_arr(len, default_ref_cnt_func, ptr);
+	return result_arr.getRaw();
 }
