@@ -181,14 +181,14 @@ unsigned char* CppVectorToKuinArray(const std::vector<unsigned char> cpp_vector)
 	unsigned long long default_ref_cnt_func = 0;
 
 	// 返すバイト列のメモリ確保
-	unsigned char* ptr = (unsigned char*)(malloc(sizeof(unsigned char) * (cpp_vector.size() + 1)));
+	unsigned char* ptr = (unsigned char*)(malloc(sizeof(unsigned char) * (cpp_vector.size())));
 
 	for (size_t i = 0; i < cpp_vector.size(); i++)
 	{
 		ptr[i] = cpp_vector[i];
 	}
 	// TODO: そもそもnull終端されていた場合？
-	ptr[cpp_vector.size()] = '\0';
+	//ptr[cpp_vector.size()] = '\0';
 	KuinArray result_arr(len, default_ref_cnt_func, ptr);
 	return result_arr.getRaw();
 }
