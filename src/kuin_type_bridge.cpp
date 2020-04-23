@@ -70,11 +70,8 @@ std::wstring KuinStrToWStr(const unsigned char* kuin_str)
 	return (wchar_t*)result_str;
 }
 
-unsigned char* WStrToKuinStr(const std::wstring wstr)
+unsigned char* WStrToKuinStr(const std::wstring wstr, unsigned long long default_ref_cnt_func)
 {
-	// 詳細不明。とりあえず0
-	unsigned long long default_ref_cnt_func = 0;
-
 	// 文字列部分の長さ
 	unsigned long long len = sizeof(wchar_t) * wstr.length();
 
@@ -173,12 +170,9 @@ std::vector<std::wstring> KuinArrayToCppVector(const unsigned char** kuin_arr)
 	return result_arr;
 }
 
-unsigned char* CppVectorToKuinArray(const std::vector<unsigned char> cpp_vector)
+unsigned char* CppVectorToKuinArray(const std::vector<unsigned char> cpp_vector, unsigned long long default_ref_cnt_func)
 {
 	unsigned long long len = cpp_vector.size();
-
-	// 詳細不明。とりあえず0
-	unsigned long long default_ref_cnt_func = 0;
 
 	// 返すバイト列のメモリ確保
 	unsigned char* ptr = (unsigned char*)(malloc(sizeof(unsigned char) * (cpp_vector.size())));
@@ -187,8 +181,6 @@ unsigned char* CppVectorToKuinArray(const std::vector<unsigned char> cpp_vector)
 	{
 		ptr[i] = cpp_vector[i];
 	}
-	// TODO: そもそもnull終端されていた場合？
-	//ptr[cpp_vector.size()] = '\0';
 	KuinArray result_arr(len, default_ref_cnt_func, ptr);
 	return result_arr.getRaw();
 }
