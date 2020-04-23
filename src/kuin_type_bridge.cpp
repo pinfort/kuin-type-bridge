@@ -1,62 +1,38 @@
 #include "common.h"
 #include "kuin_type_bridge.h"
 
-class KuinArray
+unsigned long long KuinArray::getLen()
 {
-public:
-	KuinArray(void* kuin_arr)
-	{
-		default_ref_cnt_func = ((unsigned long long*)kuin_arr)[0];
-		len = ((unsigned long long*)kuin_arr)[1];
+	return len;
+}
 
-		body = (unsigned char*)kuin_arr + 0x10;
-	}
+unsigned long long KuinArray::getDefaultRefCntFunc()
+{
+	return default_ref_cnt_func;
+}
 
-	KuinArray(unsigned long long len, unsigned long long default_ref_cnt_func, void* body)
-	{
-		KuinArray::len = len;
-		KuinArray::default_ref_cnt_func = default_ref_cnt_func;
-		KuinArray::body = body;
-	}
+void* KuinArray::getBody()
+{
+	return body;
+}
 
-	unsigned long long getLen()
-	{
-		return len;
-	}
+unsigned char* KuinArray::getRaw()
+{
+	// メタデータ含む全体の長さ
+	size_t result_len = 0x10 + (size_t)len;
 
-	unsigned long long getDefaultRefCntFunc()
-	{
-		return default_ref_cnt_func;
-	}
+	// 返すバイト列のメモリ確保
+	unsigned char* result = (unsigned char*)(malloc(result_len));
+	memset(result, 0, result_len);
 
-	void* getBody()
-	{
-		return body;
-	}
+	// メタデータの書き込み
+	((unsigned long long*)result)[0] = default_ref_cnt_func; // 0x00-0x07
+	((unsigned long long*)result)[1] = len; // 0x08-0x0f
 
-	unsigned char* getRaw()
-	{
-		// メタデータ含む全体の長さ
-		size_t result_len = 0x10 + (size_t)len;
+	memcpy(result + 0x10, body, (size_t)len);
 
-		// 返すバイト列のメモリ確保
-		unsigned char* result = (unsigned char*)(malloc(result_len));
-		memset(result, 0, result_len);
-
-		// メタデータの書き込み
-		((unsigned long long*)result)[0] = default_ref_cnt_func; // 0x00-0x07
-		((unsigned long long*)result)[1] = len; // 0x08-0x0f
-
-		memcpy(result + 0x10, body, (size_t)len);
-
-		return result;
-	}
-
-private:
-	unsigned long long default_ref_cnt_func;
-	unsigned long long len;
-	void* body;
-};
+	return result;
+}
 
 std::wstring KuinStrToWStr(const unsigned char* kuin_str)
 {
